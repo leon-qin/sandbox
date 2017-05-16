@@ -45,7 +45,7 @@ callback| [chemdrawAttachedCallback](#chemdrawattachedcallbackcddvoid) (Function
 ### ChemDrawWebConfig
 
 ## Callback Functions
-### chemdrawAttachedCallback(cdd):void
+### chemdrawAttachedCallback(cdd) : void
 ###### Arguments
 Name|Type|Description
 ----|----|----
