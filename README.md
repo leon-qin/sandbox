@@ -1,17 +1,14 @@
 # Global Objects
-## perkinelmer.ChemdrawwebManager
+## perkinelmer.ChemdrawWebManager
 Singleton manager instance for managing CDD instances.
-### attach(attachOptions) : void
+### attach(options) : void
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
-
-###### Arguments
-Name|Type|Description
-----|----|----
-attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
-
+###### Parameters
+|Name|Type|Description|
+|----|----|----|
+|options|[AttachRequest](#attachrequest)|options to initialize ChemDraw|
 ###### Returns
-void
-
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
 ###### Example
 ```javascript
 function chemDrawAttached(cdd) {
@@ -24,70 +21,85 @@ perkinelmer.ChemdrawwebManager.attach({
   callback: chemDrawAttached
 })
 ```
-
 # Classes
 ## perkinelmer.ChemdrawWeb
+This declaration is used by ChemdrawWebManager and unit test.
 ### clear() : void
-Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
-
-###### Arguments
-Name|Type|Description
-----|----|----
-attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
-
+TODO
+###### Parameters
+None
 ###### Returns
-void
-
-###### Example
-```javascript
-function chemDrawAttached(cdd) {
-  // Implement your own logic here.
-  cdd.loadCDXML("CDXML content...");
-}
-
-perkinelmer.ChemdrawwebManager.attach({
-  id: "cddContainer",
-  callback: chemDrawAttached
-})
-```
-
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+### fitToContainer() : void
+TODO
+###### Parameters
+None
+###### Returns
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+### getCDXML() : string
+TODO
+###### Parameters
+None
+###### Returns
+[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)
+### getVersion() : string
+TODO
+###### Parameters
+None
+###### Returns
+[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)
 ### loadCDXML(cdxml) : void
-Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
-
-###### Arguments
-Name|Type|Description
-----|----|----
-cdxml| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)|__required__.
-
+Loads the specified CDXML text to ChemDraw.
+###### Parameters
+|Name|Type|Description|
+|----|----|----|
+|cdxml|[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)|the CDXML text|
 ###### Returns
-void
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+###### Throws
+err CDXML is invalid
 
-###### Example
-```javascript
-function chemDrawAttached(cdd) {
-  // Implement your own logic here.
-  cdd.loadCDXML("CDXML content...");
-}
-
-perkinelmer.ChemdrawwebManager.attach({
-  id: "cddContainer",
-  callback: chemDrawAttached
-})
-```
-
+### loadConfig(config) : void
+TODO
+###### Parameters
+|Name|Type|Description|
+|----|----|----|
+|config|[JSON](#json)|TODO|
+###### Returns
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+### setViewOnly(viewOnly) : void
+TODO
+###### Parameters
+|Name|Type|Description|
+|----|----|----|
+|viewOnly|[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean)|TODO|
+###### Returns
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+### shrinkToFit() : void
+TODO
+###### Parameters
+None
+###### Returns
+[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
 # JSON Structures
-## ChemDrawWebAttachOptions
-Name|Type|Description
-----|----|----
-id| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)|__required__.
-callback| [chemdrawAttachedCallback](#chemdrawattachedcallbackcddvoid) (Function)
-
-## ChemDrawWebConfig
-
-# Callback Functions
-## chemdrawAttachedCallback(cdd) : void
-###### Arguments
-Name|Type|Description
-----|----|----
-cdd|[ChemdrawWeb](#perkinelmerchemdrawweb)|the intance of attached ChemDraw
-
+## AttachRequest
+Stores the options data to initialize a ChemDraw canvas.
+###### Properties
+|Name|Type|Description|
+|----|----|----|
+|callback|[AttachCallback](#attachcallback)|__Optional__ |
+|config|[Object](#object)|__Optional__ |
+|configUrl|[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)|__Optional__ |
+|element|[HTMLElement](#htmlelement)|__Optional__ |
+|id|[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)|__Optional__ |
+|license|[Object](#object)|__Optional__ |
+|licenseUrl|[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)|__Optional__ |
+|preservePageInfo|[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean)|__Optional__ |
+|viewonly|[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean)|__Optional__ |
+# Callbacks
+## AttachCallback
+TODO
+###### Parameters
+|Name|Type|Description|
+|----|----|----|
+|cdd|[ChemdrawWeb](#chemdrawweb)|TODO|
