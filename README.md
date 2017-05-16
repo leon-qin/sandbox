@@ -14,7 +14,7 @@ Attaches a ChemDraw canvas to a DOM container specified by element object or the
 ##### Arguments
 Name|Type|Description
 ----|----|----
-attachOptions| [ChemDrawWebAttachOptions](#ChemDrawWebAttachOptions) (JSON object)|__required__.
+attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
 
 ##### Returns
 void
