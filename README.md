@@ -39,16 +39,17 @@ perkinelmer.ChemdrawwebManager.attach({
 ### ChemDrawWebAttachOptions
 Name|Type|Description
 ----|----|----
-id| string(#chemdrawwebattachoptions) (JSON object)|__required__.
+id| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)|__required__.
+callback| [chemdrawAttachedCallback](#chemdrawattachedcallbackcddvoid) (Function)
 
 ### ChemDrawWebConfig
 
 ## Callback Functions
-### chemdrawAttachedCallback
+### chemdrawAttachedCallback(cdd):void
 ###### Arguments
 Name|Type|Description
 ----|----|----
-obj1|[ChemdrawWeb](#perkinelmerchemdrawweb)|the intance of attached ChemDraw
+cdd|[ChemdrawWeb](#perkinelmerchemdrawweb)|the intance of attached ChemDraw
 ----|----|----
 attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
 
