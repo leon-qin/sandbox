@@ -14,7 +14,7 @@ Attaches a ChemDraw canvas to a DOM container specified by element object or the
 ##### Arguments
 Name|Type|Description
 ----|----|----
-attachOptions| [ChemDrawWebAttachOptions](#perkinelmer.ChemDrawWebAttachOptions) (JSON object)|__required__.
+attachOptions| [ChemDrawWebAttachOptions](#ChemDrawWebAttachOptions) (JSON object)|__required__.
 
 ##### Returns
 void
@@ -36,5 +36,5 @@ perkinelmer.ChemdrawwebManager.attach({
 ### perkinelmer.ChemdrawWeb
 
 ## JSON Structures
-### perkinelmer.ChemDrawWebAttachOptions
-### perkinelmer.ChemdrawWebConfig
+### ChemDrawWebAttachOptions
+### ChemdrawWebConfig
