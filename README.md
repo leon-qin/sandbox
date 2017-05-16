@@ -3,8 +3,7 @@
 ## Global Objects
 ### perkinelmer.ChemdrawwebManager
 Singleton manager instance for managing CDD instances.
-#### Methods
-##### attach(attachOptions) : void
+#### attach(attachOptions) : void
 > _TODO: Change the type of AttachRequest to AttachOptions_
 
 > _TODO: Change the parameter name to options_
@@ -34,7 +33,22 @@ perkinelmer.ChemdrawwebManager.attach({
 
 ## Classes
 ### perkinelmer.ChemdrawWeb
+#### 
 
 ## JSON Structures
 ### ChemDrawWebAttachOptions
-### ChemdrawWebConfig
+Name|Type|Description
+----|----|----
+id| string(#chemdrawwebattachoptions) (JSON object)|__required__.
+
+### ChemDrawWebConfig
+
+## Callback Functions
+### chemdrawAttachedCallback
+###### Arguments
+Name|Type|Description
+----|----|----
+obj1|[ChemdrawWeb](#perkinelmerchemdrawweb)|the intance of attached ChemDraw
+----|----|----
+attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
+
