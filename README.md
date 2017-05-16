@@ -4,10 +4,6 @@
 ### perkinelmer.ChemdrawwebManager
 Singleton manager instance for managing CDD instances.
 #### attach(attachOptions) : void
-> _TODO: Change the type of AttachRequest to AttachOptions_
-
-> _TODO: Change the parameter name to options_
-
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
 
 ###### Arguments
