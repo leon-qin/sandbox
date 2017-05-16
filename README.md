@@ -50,6 +50,4 @@ callback| [chemdrawAttachedCallback](#chemdrawattachedcallbackcddvoid) (Function
 Name|Type|Description
 ----|----|----
 cdd|[ChemdrawWeb](#perkinelmerchemdrawweb)|the intance of attached ChemDraw
-----|----|----
-attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
 
