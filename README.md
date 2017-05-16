@@ -8,7 +8,7 @@ Attaches a ChemDraw canvas to a DOM container specified by element object or the
 |----|----|----|
 |options|[AttachRequest](#attachrequest)|options to initialize ChemDraw|
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ###### Example
 ```javascript
 function chemDrawAttached(cdd) {
@@ -29,13 +29,13 @@ TODO
 ###### Parameters
 None
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ### fitToContainer() : void
 TODO
 ###### Parameters
 None
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ### getCDXML() : string
 TODO
 ###### Parameters
@@ -55,7 +55,7 @@ Loads the specified CDXML text to ChemDraw.
 |----|----|----|
 |cdxml|[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string)|the CDXML text|
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ###### Throws
 err CDXML is invalid
 
@@ -66,7 +66,7 @@ TODO
 |----|----|----|
 |config|[JSON](#json)|TODO|
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ### setViewOnly(viewOnly) : void
 TODO
 ###### Parameters
@@ -74,13 +74,13 @@ TODO
 |----|----|----|
 |viewOnly|[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean)|TODO|
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 ### shrinkToFit() : void
 TODO
 ###### Parameters
 None
 ###### Returns
-[void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/void)
+void
 # JSON Structures
 ## AttachRequest
 Stores the options data to initialize a ChemDraw canvas.
