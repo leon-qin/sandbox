@@ -11,15 +11,15 @@ Singleton manager instance for managing CDD instances.
 
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
 
-##### Arguments
+###### Arguments
 Name|Type|Description
 ----|----|----
 attachOptions| [ChemDrawWebAttachOptions](#chemdrawwebattachoptions) (JSON object)|__required__.
 
-##### Returns
+###### Returns
 void
 
-##### Example
+###### Example
 ```javascript
 function chemDrawAttached(cdd) {
   // Implement your own logic here.
