@@ -1,9 +1,7 @@
-# ChemDraw Direct API References
-
-## Global Objects
-### perkinelmer.ChemdrawwebManager
+# Global Objects
+## perkinelmer.ChemdrawwebManager
 Singleton manager instance for managing CDD instances.
-#### attach(attachOptions) : void
+### attach(attachOptions) : void
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
 
 ###### Arguments
@@ -27,9 +25,9 @@ perkinelmer.ChemdrawwebManager.attach({
 })
 ```
 
-## Classes
-### perkinelmer.ChemdrawWeb
-#### clear() : void
+# Classes
+## perkinelmer.ChemdrawWeb
+### clear() : void
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
 
 ###### Arguments
@@ -53,7 +51,7 @@ perkinelmer.ChemdrawwebManager.attach({
 })
 ```
 
-#### loadCDXML(cdxml) : void
+### loadCDXML(cdxml) : void
 Attaches a ChemDraw canvas to a DOM container specified by element object or the ID of the element.
 
 ###### Arguments
@@ -77,17 +75,17 @@ perkinelmer.ChemdrawwebManager.attach({
 })
 ```
 
-## JSON Structures
-### ChemDrawWebAttachOptions
+# JSON Structures
+## ChemDrawWebAttachOptions
 Name|Type|Description
 ----|----|----
 id| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)|__required__.
 callback| [chemdrawAttachedCallback](#chemdrawattachedcallbackcddvoid) (Function)
 
-### ChemDrawWebConfig
+## ChemDrawWebConfig
 
-## Callback Functions
-### chemdrawAttachedCallback(cdd) : void
+# Callback Functions
+## chemdrawAttachedCallback(cdd) : void
 ###### Arguments
 Name|Type|Description
 ----|----|----
