@@ -10,8 +10,8 @@
     <project.scm.id>github</project.scm.id>
   </properties>
   <scm>
-    <developerConnection>scm:git:https://github.com/PerkinElmer/ChemDraw-CommonCS.git</developerConnection>
-    <url>https://github.com/PerkinElmer/ChemDraw-CommonCS</url>
+    <developerConnection>scm:git:https://github.com/lqin-pki/sandbox.git</developerConnection>
+    <url>https://github.com/lqin-pki/sandbox</url>
   </scm>
   <build>
     <plugins>
@@ -41,7 +41,7 @@
   <distributionManagement>
     <repository>
       <id>pki</id>
-      <url>https://github.com/lqin-pki/sandbox.git</url>
+      <url>http://shanghai-dev.scienceaccelerated.com:8080/nexus/content/repositories/pki/</url>
     </repository>
   </distributionManagement>
 </project>
