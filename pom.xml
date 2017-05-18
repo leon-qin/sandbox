@@ -41,7 +41,7 @@
   <distributionManagement>
     <repository>
       <id>pki</id>
-      <url>http://shanghai-dev.scienceaccelerated.com:8080/nexus/content/repositories/pki/</url>
+      <url>https://github.com/lqin-pki/sandbox.git</url>
     </repository>
   </distributionManagement>
 </project>
