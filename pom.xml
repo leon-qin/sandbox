@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.perkinelmer.chemistry</groupId>
+  <artifactId>corechemistry</artifactId>
+  <name>Core Chemistry</name>
+  <version>2.0</version>
+  <properties>
+    <project.scm.id>github</project.scm.id>
+  </properties>
+  <scm>
+    <developerConnection>scm:git:https://github.com/PerkinElmer/ChemDraw-CommonCS.git</developerConnection>
+    <url>https://github.com/PerkinElmer/ChemDraw-CommonCS</url>
+    <tag>sandbox-2.0</tag>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <descriptor>deps.xml</descriptor>
+        </configuration>
+        <executions>
+          <execution>
+            <id>create-archive</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+      </plugin>
+    </plugins>
+  </build>
+  <distributionManagement>
+    <repository>
+      <id>pki</id>
+      <url>https://github.com/lqin-pki/sandbox.git</url>
+    </repository>
+  </distributionManagement>
+</project>
