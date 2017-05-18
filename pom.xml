@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.perkinelmer.chemistry</groupId>
   <artifactId>sandbox</artifactId>
   <name>Core Chemistry</name>
-  <version>2.0</version>
+  <version>1.0.0-noarch-SNAPSHOT</version>
   <properties>
     <project.scm.id>github</project.scm.id>
   </properties>
   <scm>
     <developerConnection>scm:git:https://github.com/lqin-pki/sandbox.git</developerConnection>
     <url>https://github.com/lqin-pki/sandbox</url>
-    <tag>sandbox-2.0</tag>
   </scm>
   <build>
     <plugins>
