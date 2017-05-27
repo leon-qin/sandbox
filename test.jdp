@@ -1,0 +1,132 @@
+pipeline {
+    parameters {
+        string(name: 'environment', defaultValue: 'trusty', description: 'centos6 | centos7 | trusty | xenial')
+        string(name: 'configuration', defaultValue: 'Release', description: 'Debug | Release')
+        string(name: 'notifyList', defaultValue: "leon.qin@perkinelmer.com", description: "Who wants to always receive notifications about build results?")
+        string(name: 'branch', defaultValue: "refs/heads/master", description: "Set the branch of the CommonCS to build.")
+    }
+    environment {
+        PRODUCT_NAME = "corechemistry"
+        PRODUCT_VERSION = "1.0.0"
+        BUILD_ENV_IDENTIFIER = "${params.environment}-x86_64"
+        BUILD_OUTPUT_TOP_DIR = "output"
+        BUILD_OUTPUT_BIN_DIR = "CommonCS/${BUILD_OUTPUT_TOP_DIR}/${params.configuration}"
+        BUILD_OUTPUT_HDR_DIR = "CommonCS/${BUILD_OUTPUT_TOP_DIR}/includes"
+        BUILD_OUTPUT_TEST_DIR = "${BUILD_OUTPUT_BIN_DIR}/test"
+        BUILD_OUTPUT_LIB_DIR = "${BUILD_OUTPUT_BIN_DIR}/bin"
+        GIT_CREDENTIALS_ID = "0b32ae7e-831b-4070-8d8a-0ac55f4b9782"
+        GIT_URL_COMMONTHIRDPARTY = "github.com/lqin-pki/sandbox"
+        GIT_BRANCH_COMMONTHIRDPARTY = "refs/heads/master"
+        GIT_URL_COMMONCS = "github.com/lqin-pki/sandbox2"
+        GIT_BRANCH_COMMONCS = "${params.branch}"
+        ARCHIVE_FILE_NAME = "${PRODUCT_NAME}-${PRODUCT_VERSION}.${BUILD_ID}.${BUILD_ENV_IDENTIFIER}"
+        ARCHIVE_MVN_REPO = "http://shanghai-dev.scienceaccelerated.com:8080/nexus/content/repositories/pki/";
+        ARCHIVE_MVN_SERVER_ID = "shanghai-dev-nexus"
+    }
+    agent {
+        docker {
+            image "dockerregistry.scienceaccelerated.com:5000/builder:${params.environment}"
+            label "linuxdocker"
+        }
+    }
+    triggers{
+        pollSCM("H/1 * * * *")
+    }
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 1, unit: 'HOURS')
+        timestamps()
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_COMMONTHIRDPARTY}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'CommonThirdParty'], [$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GIT_CREDENTIALS_ID}", url: "https://${GIT_URL_COMMONTHIRDPARTY}"]]])
+                checkout([$class: 'GitSCM', branches: [[name: "${GIT_BRANCH_COMMONCS}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'CommonCS'], [$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GIT_CREDENTIALS_ID}", url: "https://${GIT_URL_COMMONCS}"]]])
+                script {
+                    gitCommit = sh(returnStdout: true, script: 'cd CommonThirdParty;git rev-parse HEAD').trim()
+                    writeFile file: "CommonThirdParty/commit.txt", text: gitCommit
+                    gitCommit = sh(returnStdout: true, script: 'cd CommonCS;git rev-parse HEAD').trim()
+                    writeFile file: "CommonCS/commit.txt", text: gitCommit
+                    shortCommit = gitCommit.take(6)
+                    currentBuild.displayName = "${ARCHIVE_FILE_NAME}(${params.configuration}@${shortCommit})"
+                }
+            }
+        }
+        stage('Build'){
+            steps {
+                echo "${params.configuration} on ${params.environment}"
+                sh "du -h --max-depth=2 ."
+                sh "chmod 777 ./CommonCS/buildCCAAPForLinux"
+                sh "cd CommonCS;./buildCCAAPForLinux ${BUILD_OUTPUT_TOP_DIR} ${params.configuration}"
+            }
+        }
+        stage('Test') {
+            steps {
+                parallel(
+                    "HelmParserTest": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/HelmParserTest;./HelmParserTest --gtest_output=xml"},
+                    "TestClean2D": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestClean2D;./TestClean2D --gtest_output=xml"},
+                    "TestLibCC": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibCC;./TestLibCC --gtest_output=xml"},
+                    "TestLibCCE": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibCCE;./TestLibCCE --gtest_output=xml"},
+                    "TestLibCFSearch": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibCFSearch;./TestLibCFSearch --gtest_output=xml"},
+                    "TestLibCommon": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibCommon;./TestLibCommon --gtest_output=xml"},
+                    "TestLibMSTSearch": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibMSTSearch;./TestLibMSTSearch --gtest_output=xml"},
+                    "TestLibNameToStructure": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibNameToStructure;./TestLibNameToStructure --gtest_output=xml"},
+                    "TestLibStructureToName": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibStructureToName;./TestLibStructureToName --gtest_output=xml"},
+                    "TestLibSDG": {sh "cd ${BUILD_OUTPUT_TEST_DIR}/TestLibSDG;./TestLibSDG --gtest_output=xml"}
+                )
+            }
+        }
+        stage('Package') {
+            steps {
+                sh "rm -rf ${BUILD_ENV_IDENTIFIER}; mkdir -p ${BUILD_ENV_IDENTIFIER}/lib; mkdir ${BUILD_ENV_IDENTIFIER}/include"
+                sh "mv ${BUILD_OUTPUT_LIB_DIR} ${BUILD_ENV_IDENTIFIER}/lib/linux"
+                sh "mv ${BUILD_OUTPUT_HDR_DIR}/CommonCS/* ${BUILD_ENV_IDENTIFIER}/include/"
+                sh "mv ${BUILD_OUTPUT_HDR_DIR}/CommonThirdParty/* ${BUILD_ENV_IDENTIFIER}/include/"
+                sh "echo ${ARCHIVE_FILE_NAME} > ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "echo ${params.configuration} >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "echo CommonThirdParty >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "cat CommonThirdParty/commit.txt >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "echo ${GIT_BRANCH_COMMONTHIRDPARTY} >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "echo CommonCS >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "cat CommonCS/commit.txt >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "echo ${GIT_BRANCH_COMMONCS} >> ${BUILD_ENV_IDENTIFIER}/version.txt"
+                sh "tar -czf ${ARCHIVE_FILE_NAME}.tar.gz ${BUILD_ENV_IDENTIFIER}/*"
+            }
+        }
+        stage('Publish Release') {
+            when {
+                expression {
+                    return params.configuration == 'Release'
+                }
+            }
+            steps {
+                junit "${BUILD_OUTPUT_TEST_DIR}/**/*.xml"
+                sh "mvn deploy:deploy-file -DgroupId=com.perkinelmer.informatics -DartifactId=${PRODUCT_NAME} -Dversion=${PRODUCT_VERSION} -DgeneratePom=true -Dpackaging=tar.gz -DrepositoryId=shanghai-dev-nexus -Durl=http://shanghai-dev.scienceaccelerated.com:8080/nexus/content/repositories/pki/ -Dclassifier=${BUILD_ENV_IDENTIFIER} -Dtype=tar.gz -Dfile=${ARCHIVE_FILE_NAME}.tar.gz"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.GIT_CREDENTIALS_ID}", usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    sh "cd CommonCS;git tag -a ${ARCHIVE_FILE_NAME} -m ${env.BUILD_URL}"
+                    sh "cd CommonCS;git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_URL_COMMONCS} --tags"
+                    sh "cd CommonThirdParty;git tag -a ${ARCHIVE_FILE_NAME} -m ${env.BUILD_URL}"
+                    sh "cd CommonThirdParty;git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_URL_COMMONTHIRDPARTY} --tags"
+                }
+            }
+        }
+    }
+    post {
+        success {
+            archive "${ARCHIVE_FILE_NAME}.tar.gz"
+            mail to: "${params.notifyList}",
+            subject: "${currentBuild.fullDisplayName} succeeded",
+            body: "Check ${env.BUILD_URL} for details."
+        }
+        failure {
+            mail to: "${params.notifyList}",
+            subject: "${currentBuild.fullDisplayName} failed",
+            body: "Check ${env.BUILD_URL} for details."
+        }
+        unstable {
+            mail to: "${params.notifyList}",
+            subject: "${currentBuild.fullDisplayName} is unstable",
+            body: "Check ${env.BUILD_URL} for details."
+        }
+    }
+}
