@@ -29,8 +29,8 @@ pipeline {
             label "linuxdocker"
         }
     }
-    triggers{
-        pollSCM 'H/5 * * * *'
+    triggers {
+        pollSCM('H/5 * * * *')
     }
     options {
         disableConcurrentBuilds()
