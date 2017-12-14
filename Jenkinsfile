@@ -25,7 +25,7 @@ pipeline {
         stage('Build & Package') {
             steps {
                 //pkiMsbuild2017 "Rebuild", "${BUILD_SOLUTION}", "Configuration=Release"
-                bat "dir /S lib"
+                bat "dir /S"
             }
         }
         stage('Sign') {
