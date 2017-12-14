@@ -20,7 +20,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 pkiCheckout("https://github.com/lqin-pki/sandbox@${env.CHECKOUT_BRANCH}");
-                bat "GetSFSdk.bat"
             }
         }
         stage('Build & Package') {
