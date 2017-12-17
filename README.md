@@ -1,5 +1,3 @@
-llllll-----0000000000-000000000-00000000000000---0000
-0000000000
 # Global Objects
 ## perkinelmer.ChemdrawWebManager
 Singleton manager instance for managing CDD instances.
