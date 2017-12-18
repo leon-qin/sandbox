@@ -16,6 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo "${GIT_BRANCH}"
                 pkiCheckout("https://github.com/lqin-pki/sandbox@${env.CHECKOUT_BRANCH}");
             }
         }
