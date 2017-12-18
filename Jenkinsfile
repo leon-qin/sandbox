@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         NOTIFY_LIST = "leon.qin@perkinelmer.com"
-        CHECKOUT_BRANCH = "refs/heads/${BRANCH_NAME}"
+        CHECKOUT_BRANCH = "${GIT_BRANCH}"
         BUILD_SOLUTION = ""
         OUTPUT_SPK1 = ""
         OUTPUT_SPK2 = ""
